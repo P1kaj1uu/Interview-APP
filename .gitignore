@@ -1,0 +1,69 @@
+# 依赖目录
+node_modules/
+vendor/
+.DS_Store
+
+# iOS 构建文件
+ios/Pods/
+ios/Podfile.lock
+ios/build/
+ios/DerivedData/
+ios/*.xcworkspace
+ios/*.xcodeproj/xcuserdata/
+ios/*.xcodeproj/project.xcworkspace/
+
+# Android 构建文件
+android/app/build/
+android/build/
+android/.gradle/
+android/local.properties
+android/app/*.iml
+android/*.iml
+android/.idea/
+android/captures/
+android/gradle.properties.local
+
+# 测试文件
+tests/
+coverage/
+
+# 环境变量和密钥
+.env
+.env.local
+.env.*.local
+
+# 调试文件
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+*.log
+
+# 运行时文件
+.temp
+.tmp
+.DS_Store
+*.pid
+*.pid.lock
+
+# IDE 配置文件
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# 打包文件
+*.pem
+*.p12
+*.keystore
+build/
+dist/
+
+# React Native 特定
+metro.config.js.bak
+jest.config.js.bak
+babel.config.js.bak
+
+# 缓存文件
+.cache/
+.happypack/
