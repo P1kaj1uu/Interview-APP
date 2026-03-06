@@ -1,97 +1,253 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# InterviewMaster - 面试练习 App
 
-# Getting Started
+<p align="center">
+  <img src="https://img.shields.io/badge/React%20Native-0.84.1-blue" alt="React Native">
+  <img src="https://img.shields.io/badge/TypeScript-5.8.3-blue" alt="TypeScript">
+  <img src="https://img.shields.io/badge/React%20Navigation-7.x-blue" alt="React Navigation">
+  <img src="https://img.shields.io/badge/Platform-iOS%20%7C%20Android-green" alt="Platform">
+</p>
 
-> **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
+一款专为面试者设计的移动端应用，支持 **AI 视频模拟面试** 和 **编程题库练习**，帮助用户高效准备技术面试。
 
-## Step 1: Start Metro
+## 功能特性
 
-First, you will need to run **Metro**, the JavaScript build tool for React Native.
+### 1. AI 视频模拟面试
 
-To start the Metro dev server, run the following command from the root of your React Native project:
+- 🎥 **实时视频对话**：模拟真实面试场景，与 AI 面试官进行互动
+- 💬 **智能追问**：AI 根据回答内容进行深入追问
+- 📊 **面试评估**：面试结束后生成详细的评估报告
+- 📝 **面试记录**：保存历史面试记录，支持回顾复盘
 
-```sh
-# Using npm
+### 2. 题库练习
+
+- 📚 **多语言支持**：JavaScript, TypeScript, Python, Java, Go, C++, Rust
+- 🎯 **难度分级**：简单、中等、困难三个难度等级
+- 🔍 **智能筛选**：按语言、难度、标签快速筛选题目
+- ✏️ **代码编辑**：内置代码编辑器，支持语法高亮
+- 📖 **答案解析**：提交后查看参考答案和解题思路
+
+### 3. 错题本
+
+- ❌ **自动收录**：回答错误的题目自动进入错题本
+- 🔄 **重新练习**：针对错题进行针对性训练
+- 🗑️ **一键清空**：支持清空错题记录
+
+### 4. 收藏夹
+
+- ⭐ **收藏题目**：收藏有价值的题目便于复习
+- 📋 **快速访问**：快速跳转到收藏的题目
+
+### 5. 个人中心
+
+- 📊 **学习统计**：已刷题数、错题数、收藏数、面试次数
+- 🌐 **语言进度**：各编程语言刷题进度可视化
+- ⚙️ **设置管理**：通知管理、深色模式等设置
+
+## 技术栈
+
+| 技术             | 版本   | 说明                  |
+| ---------------- | ------ | --------------------- |
+| React Native     | 0.84.1 | 跨平台移动应用框架    |
+| TypeScript       | 5.8.3  | 类型安全的 JavaScript |
+| React Navigation | 7.x    | 应用导航系统          |
+| AsyncStorage     | -      | 本地数据持久化        |
+| React Context    | -      | 状态管理              |
+
+## 项目架构
+
+```
+Interview-APP/
+├── App.tsx                     # 应用入口
+├── src/
+│   ├── components/             # 公共组件
+│   │   └── LinearGradient.tsx # 渐变背景组件
+│   ├── context/               # 状态管理
+│   │   └── AppContext.tsx    # 全局状态上下文
+│   ├── data/                  # 数据层
+│   │   └── questions.ts      # 题库数据
+│   ├── navigation/            # 导航配置
+│   │   └── AppNavigator.tsx  # 导航器
+│   ├── screens/              # 页面组件
+│   │   ├── HomeScreen.tsx           # 首页
+│   │   ├── QuestionBankScreen.tsx   # 题库列表
+│   │   ├── QuestionDetailScreen.tsx # 题目详情
+│   │   ├── InterviewScreen.tsx      # 面试选择
+│   │   ├── InterviewChatScreen.tsx  # AI面试对话
+│   │   ├── WrongQuestionsScreen.tsx # 错题本
+│   │   ├── FavoritesScreen.tsx      # 收藏夹
+│   │   ├── ProfileScreen.tsx        # 个人中心
+│   │   └── InterviewHistoryScreen.tsx # 面试记录
+│   ├── types/                # 类型定义
+│   │   └── index.ts          # TypeScript类型
+│   └── utils/                # 工具函数
+│       └── theme.ts          # 主题配置
+└── package.json               # 依赖配置
+```
+
+## 系统架构图
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                      App.tsx                               │
+│                  (应用入口 + Provider)                      │
+└─────────────────────────────────────────────────────────────┘
+                              │
+                              ▼
+┌─────────────────────────────────────────────────────────────┐
+│                    Navigation Layer                         │
+│  ┌─────────────────────────────────────────────────────┐   │
+│  │              Tab Navigator (底部导航)                 │   │
+│  │  ┌────────┐ ┌────────┐ ┌────────┐ ┌────────┐ ┌────┐ │   │
+│  │  │  首页   │ │  题库   │ │ 面试   │ │ 错题  │ │我的│ │   │
+│  │  └────────┘ └────────┘ └────────┘ └────────┘ └────┘ │   │
+│  └─────────────────────────────────────────────────────┘   │
+│  ┌─────────────────────────────────────────────────────┐   │
+│  │              Stack Navigator (页面栈)               │   │
+│  │   题目详情 │ AI面试 │ 收藏夹 │ 面试记录              │   │
+│  └─────────────────────────────────────────────────────┘   │
+└─────────────────────────────────────────────────────────────┘
+                              │
+                              ▼
+┌─────────────────────────────────────────────────────────────┐
+│                   Business Layer                            │
+│  ┌─────────────────────────────────────────────────────┐   │
+│  │              AppContext (状态管理)                   │   │
+│  │  • 已解决问题 • 错题 • 收藏 • 面试记录              │   │
+│  └─────────────────────────────────────────────────────┘   │
+│  ┌─────────────────────────────────────────────────────┐   │
+│  │              Screens (业务页面)                      │   │
+│  │  HomeScreen                                        │   │
+│  │  QuestionBankScreen + QuestionDetailScreen          │   │
+│  │  InterviewScreen + InterviewChatScreen             │   │
+│  │  WrongQuestionsScreen + FavoritesScreen            │   │
+│  │  ProfileScreen + InterviewHistoryScreen            │   │
+│  └─────────────────────────────────────────────────────┘   │
+└─────────────────────────────────────────────────────────────┘
+                              │
+                              ▼
+┌─────────────────────────────────────────────────────────────┐
+│                     Data Layer                              │
+│  ┌─────────────────┐  ┌─────────────────────────────┐    │
+│  │  questions.ts   │  │    AsyncStorage              │    │
+│  │  (内置题库数据)   │  │    (用户进度持久化)          │    │
+│  │  • 17+ 编程题    │  │    • solvedQuestions        │    │
+│  │  • AI面试问题    │  │    • wrongQuestions         │    │
+│  │  • 多语言支持    │  │    • favoriteQuestions      │    │
+│  └─────────────────┘  │    • interviews             │    │
+│                        └─────────────────────────────┘    │
+└─────────────────────────────────────────────────────────────┘
+```
+
+## 数据模型
+
+### Question (题目)
+
+```typescript
+interface Question {
+  id: string;
+  title: string;
+  description: string;
+  difficulty: "easy" | "medium" | "hard";
+  language: string;
+  starterCode: string;
+  solution: string;
+  explanation: string;
+  tags: string[];
+}
+```
+
+### Interview (面试记录)
+
+```typescript
+interface Interview {
+  id: string;
+  type: "technical" | "behavioral";
+  date: string;
+  duration: number;
+  questions: string[];
+  evaluation: string;
+  score: number;
+}
+```
+
+### UserProgress (用户进度)
+
+```typescript
+interface UserProgress {
+  solvedQuestions: string[];
+  wrongQuestions: string[];
+  favoriteQuestions: string[];
+  interviews: Interview[];
+}
+```
+
+## 快速开始
+
+### 环境要求
+
+- Node.js >= 22.11.0
+- React Native CLI
+- Android Studio / Xcode
+
+### 安装依赖
+
+```bash
+# 安装项目依赖
+npm install
+
+# iOS 额外步骤
+cd ios && pod install && cd ..
+```
+
+### 运行应用
+
+```bash
+# 启动 Metro bundler
 npm start
 
-# OR using Yarn
-yarn start
-```
-
-## Step 2: Build and run your app
-
-With Metro running, open a new terminal window/pane from the root of your React Native project, and use one of the following commands to build and run your Android or iOS app:
-
-### Android
-
-```sh
-# Using npm
-npm run android
-
-# OR using Yarn
-yarn android
-```
-
-### iOS
-
-For iOS, remember to install CocoaPods dependencies (this only needs to be run on first clone or after updating native deps).
-
-The first time you create a new project, run the Ruby bundler to install CocoaPods itself:
-
-```sh
-bundle install
-```
-
-Then, and every time you update your native dependencies, run:
-
-```sh
-bundle exec pod install
-```
-
-For more information, please visit [CocoaPods Getting Started guide](https://guides.cocoapods.org/using/getting-started.html).
-
-```sh
-# Using npm
+# 运行 iOS
 npm run ios
 
-# OR using Yarn
-yarn ios
+# 运行 Android
+npm run android
 ```
 
-If everything is set up correctly, you should see your new app running in the Android Emulator, iOS Simulator, or your connected device.
+### 构建 APK
 
-This is one way to run your app — you can also build it directly from Android Studio or Xcode.
+```bash
+# Android 调试包
+cd android && ./gradlew assembleDebug
+```
 
-## Step 3: Modify your app
+## 页面预览
 
-Now that you have successfully run the app, let's make changes!
+| 首页                   | 题库          | 面试              |
+| ---------------------- | ------------- | ----------------- |
+| 欢迎 banner + 快速入口 | 语言/难度筛选 | 技术面/行为面选择 |
+| 学习进度统计           | 题目卡片列表  | AI 面试对话       |
 
-Open `App.tsx` in your text editor of choice and make some changes. When you save, your app will automatically update and reflect these changes — this is powered by [Fast Refresh](https://reactnative.dev/docs/fast-refresh).
+| 题目详情            | 错题本   | 个人中心 |
+| ------------------- | -------- | -------- |
+| 题目描述 + 代码编辑 | 错题列表 | 统计数据 |
+| 提交/查看答案       | 重新练习 | 学习进度 |
 
-When you want to forcefully reload, for example to reset the state of your app, you can perform a full reload:
+## 内置题库
 
-- **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Dev Menu**, accessed via <kbd>Ctrl</kbd> + <kbd>M</kbd> (Windows/Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (macOS).
-- **iOS**: Press <kbd>R</kbd> in iOS Simulator.
+目前已包含 **17+** 道精选编程题目，覆盖以下语言：
 
-## Congratulations! :tada:
+- **JavaScript**: 两数之和、有效的括号、反转链表、防抖/节流函数、Promise.all
+- **TypeScript**: 泛型查询、Partial/Required 实现
+- **Python**: 合并有序数组、LRU 缓存
+- **Java**: 反转字符串、单例模式
+- **Go**: 并发计数器、Worker Pool
+- **C++**: 智能指针
+- **Rust**: Ownership、Result 错误处理
 
-You've successfully run and modified your React Native App. :partying_face:
+## AI 面试问题
 
-### Now what?
+- **技术面试**: 10+ 常见技术问题
+- **行为面试**: 10+ 常见行为问题
 
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [docs](https://reactnative.dev/docs/getting-started).
+## 贡献
 
-# Troubleshooting
-
-If you're having issues getting the above steps to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+欢迎提交 Issue 和 Pull Request！
